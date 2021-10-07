@@ -32,13 +32,21 @@ public class Blocks {
                 break;
             case MIDDLE:
                 if (R1ValRisingEdge) {
-                    piston.toggle();
+                    if (pistonState == Value.kForward) {
+                        pistonState = Value.kReverse;
+                    } else if (pistonState == Value.kReverse) {
+                        pistonState = Value.kForward;
+                    }
                 }
                 intakePower = RJoystickYVal;
                 tiltMotorPos = tiltMotorLow;
             case TOP:
                 if (R1ValRisingEdge) {
-                    piston.toggle();
+                    if (pistonState == Value.kForward) {
+                        pistonState = Value.kReverse;
+                    } else if (pistonState == Value.kReverse) {
+                        pistonState = Value.kForward;
+                    }
                 }
                 intakePower = RJoystickYVal;
                 if (L1RisingEdge) {
