@@ -1,12 +1,13 @@
 package frc.robot.SubSystems;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.can.TalonFX;
-
 import frc.robot.Enums.RobotState;
+import frc.robot.orbitmotors.MotorControlMode;
+import frc.robot.orbitmotors.MotorProps;
+import frc.robot.orbitmotors.OrbitMotor;
+import frc.robot.orbitmotors.OrbitMotorFactory;
 
 public class Lift {
-    private final TalonFX talon = new TalonFX(0/* will change */);
+    private final OrbitMotor liftMotor = OrbitMotorFactory.falcon(new MotorProps(1, false, false, 1));
     private double wantedPos;
 
     // will change
@@ -31,6 +32,7 @@ public class Lift {
                 break;
 
         }
-        talon.set(ControlMode.MotionMagic, wantedPos);
+        // talon.set(ControlMode.MotionMagic, wantedPos);
+        liftMotor.setOutput(MotorControlMode.POSITION, wantedPos);
     }
 }

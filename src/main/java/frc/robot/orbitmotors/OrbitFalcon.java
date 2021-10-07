@@ -1,4 +1,4 @@
-package frc.robot.orbitutil.orbitmotors;
+package frc.robot.orbitmotors;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.ctre.phoenix.motorcontrol.ControlMode;
@@ -29,22 +29,22 @@ final class OrbitFalcon extends WPI_TalonFX implements OrbitMotor {
     @Override
     public void setOutput(final MotorControlMode controlMode, final double value) {
         switch (controlMode) {
-        case PERCENT_OUTPUT:
-        default:
-            set(ControlMode.PercentOutput, value);
-            return;
-        case POSITION:
-            set(ControlMode.Position, value * motorPerPhysicalUnitsRatio);
-            return;
-        case VELOCITY:
-            set(ControlMode.Velocity, value * motorPerPhysicalUnitsRatio / 10);
-            return;
-        case MOTION_MAGIC:
-            set(ControlMode.MotionMagic, value * motorPerPhysicalUnitsRatio);
-            return;
-        case CURRENT:
-            set(ControlMode.Current, value);
-            return;
+            case PERCENT_OUTPUT:
+            default:
+                set(ControlMode.PercentOutput, value);
+                return;
+            case POSITION:
+                set(ControlMode.Position, value * motorPerPhysicalUnitsRatio);
+                return;
+            case VELOCITY:
+                set(ControlMode.Velocity, value * motorPerPhysicalUnitsRatio / 10);
+                return;
+            case MOTION_MAGIC:
+                set(ControlMode.MotionMagic, value * motorPerPhysicalUnitsRatio);
+                return;
+            case CURRENT:
+                set(ControlMode.Current, value);
+                return;
         }
     }
 

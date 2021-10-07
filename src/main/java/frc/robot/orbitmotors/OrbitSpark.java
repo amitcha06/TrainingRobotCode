@@ -1,4 +1,4 @@
-package frc.robot.orbitutil.orbitmotors;
+package frc.robot.orbitmotors;
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANPIDController;
@@ -32,22 +32,22 @@ final class OrbitSpark extends CANSparkMax implements OrbitMotor {
     @Override
     public void setOutput(final MotorControlMode controlMode, final double value) {
         switch (controlMode) {
-        case PERCENT_OUTPUT:
-        default:
-            canPIDController.setReference(value, ControlType.kDutyCycle);
-            return;
-        case POSITION:
-            canPIDController.setReference(value * motorPerPhysicalUnitsRatio, ControlType.kPosition);
-            return;
-        case VELOCITY:
-            canPIDController.setReference(value * motorPerPhysicalUnitsRatio * 60, ControlType.kVelocity);
-            return;
-        case MOTION_MAGIC:
-            canPIDController.setReference(value * motorPerPhysicalUnitsRatio, ControlType.kSmartMotion);
-            return;
-        case CURRENT:
-            canPIDController.setReference(value, ControlType.kCurrent);
-            return;
+            case PERCENT_OUTPUT:
+            default:
+                canPIDController.setReference(value, ControlType.kDutyCycle);
+                return;
+            case POSITION:
+                canPIDController.setReference(value * motorPerPhysicalUnitsRatio, ControlType.kPosition);
+                return;
+            case VELOCITY:
+                canPIDController.setReference(value * motorPerPhysicalUnitsRatio * 60, ControlType.kVelocity);
+                return;
+            case MOTION_MAGIC:
+                canPIDController.setReference(value * motorPerPhysicalUnitsRatio, ControlType.kSmartMotion);
+                return;
+            case CURRENT:
+                canPIDController.setReference(value, ControlType.kCurrent);
+                return;
         }
     }
 

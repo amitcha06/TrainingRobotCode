@@ -6,10 +6,14 @@ import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import frc.robot.Enums.RobotState;
+import frc.robot.orbitmotors.MotorControlMode;
+import frc.robot.orbitmotors.MotorProps;
+import frc.robot.orbitmotors.OrbitMotor;
+import frc.robot.orbitmotors.OrbitMotorFactory;
 
 public class WaterWheel {
-    private final TalonFX topMotor = new TalonFX(0/* will change */);
-    private final TalonFX bottomMotor = new TalonFX(0/* will change */);
+    private final OrbitMotor topMotor = OrbitMotorFactory.falcon(new MotorProps(1, false, false, 1));
+    private final OrbitMotor bottomMotor = OrbitMotorFactory.falcon(new MotorProps(1, false, false, 1));
     private final DoubleSolenoid piston = new DoubleSolenoid(0, 0/* will change */);
     public Value pistonState;
     private double topPower = 0;
@@ -48,7 +52,7 @@ public class WaterWheel {
 
         }
         piston.set(pistonState);
-        topMotor.set(ControlMode.PercentOutput, topPower);
-        bottomMotor.set(ControlMode.PercentOutput, bottomPower);
+        topMotor.setOutput(MotorControlMode.PERCENT_OUTPUT, topPower);
+        bottomMotor.setOutput(MotorControlMode.PERCENT_OUTPUT, bottomPower);
     }
 }
