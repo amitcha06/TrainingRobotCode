@@ -1,4 +1,4 @@
-package frc.robot.SubSystems;
+package frc.robot.subsystems;
 
 import frc.robot.Enums.RobotState;
 import frc.robot.orbitmotors.MotorControlMode;

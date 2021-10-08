@@ -1,4 +1,4 @@
-package frc.robot.SubSystems;
+package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;

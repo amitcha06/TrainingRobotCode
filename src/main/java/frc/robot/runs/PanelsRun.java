@@ -1,4 +1,4 @@
-package frc.robot.Runs;
+package frc.robot.runs;
 
 import edu.wpi.first.wpilibj.TimedRobot;
 
