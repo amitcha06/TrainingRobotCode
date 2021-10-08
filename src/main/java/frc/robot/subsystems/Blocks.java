@@ -2,19 +2,22 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
-import frc.robot.Enums.RobotState;
 import frc.robot.orbitmotors.MotorControlMode;
 import frc.robot.orbitmotors.MotorProps;
 import frc.robot.orbitmotors.OrbitMotor;
 import frc.robot.orbitmotors.OrbitMotorFactory;
 
 public class Blocks {
+    // TODO: check ports and properties
     private final OrbitMotor tiltMotor = OrbitMotorFactory.talonSRX(new MotorProps(0, false, false, 1));
     private final OrbitMotor intakeWheels = OrbitMotorFactory.spark(new MotorProps(0, false, false, 1));
-    private final DoubleSolenoid piston = new DoubleSolenoid(0, 0/* will change */);
+    private final DoubleSolenoid piston = new DoubleSolenoid(0, 0);
 
     private final double tiltMotorHigh = 0;
     private final double tiltMotorLow = 0;
+
+    private boolean pistonForward = false;
+    private boolean tiltMotorTop = false;
 
     public void init() {
         piston.set(Value.kForward);
@@ -22,54 +25,43 @@ public class Blocks {
 
     public void execute(final RobotState state, final double RJoystickYVal, final boolean R1ValRisingEdge,
             final boolean L1RisingEdge) {
-        Value pistonState;
         double intakePower;
-        double tiltMotorPos;
-
 
         switch (state) {
             case INTAKE:
-                pistonState = Value.kReverse;
+                pistonForward = false;
                 intakePower = 1;
-                tiltMotorPos = tiltMotorLow;
+                tiltMotorTop = false;
                 break;
+
             case MIDDLE:
                 if (R1ValRisingEdge) {
-                    if (pistonState == Value.kForward) {
-                        pistonState = Value.kReverse;
-                    } else if (pistonState == Value.kReverse) {
-                        pistonState = Value.kForward;
-                    }
+                    pistonForward = !pistonForward;
                 }
                 intakePower = RJoystickYVal;
-                tiltMotorPos = tiltMotorLow;
+                tiltMotorTop = false;
+                break;
+
             case TOP:
                 if (R1ValRisingEdge) {
-                    if (pistonState == Value.kForward) {
-                        pistonState = Value.kReverse;
-                    } else if (pistonState == Value.kReverse) {
-                        pistonState = Value.kForward;
-                    }
+                    pistonForward = !pistonForward;
                 }
                 intakePower = RJoystickYVal;
                 if (L1RisingEdge) {
-                    if (tiltMotorPos == tiltMotorHigh) {
-                        tiltMotorPos = tiltMotorLow;
-                    } else {
-                        tiltMotorPos = tiltMotorHigh;
-                    }
+                    tiltMotorTop = !tiltMotorTop;
                 }
                 break;
+
             case TRAVEL:
             default:
-                pistonState = Value.kForward;
+                pistonForward = false;
                 intakePower = 0;
-                tiltMotorPos = 0;
+                tiltMotorTop = false;
                 break;
-            
         }
-        piston.set(pistonState);
+
+        piston.set(pistonForward ? Value.kForward : Value.kReverse);
         intakeWheels.setOutput(MotorControlMode.PERCENT_OUTPUT, intakePower);
-        tiltMotor.setOutput(MotorControlMode.POSITION, tiltMotorPos);
+        tiltMotor.setOutput(MotorControlMode.POSITION, tiltMotorTop ? tiltMotorHigh : tiltMotorLow);
     }
 }

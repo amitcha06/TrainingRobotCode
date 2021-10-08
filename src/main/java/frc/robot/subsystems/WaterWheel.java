@@ -2,7 +2,6 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
-import frc.robot.Enums.RobotState;
 import frc.robot.orbitmotors.MotorControlMode;
 import frc.robot.orbitmotors.MotorProps;
 import frc.robot.orbitmotors.OrbitMotor;
@@ -13,7 +12,6 @@ public class WaterWheel {
     private final OrbitMotor bottomMotor = OrbitMotorFactory.falcon(new MotorProps(1, false, false, 1));
     private final DoubleSolenoid piston = new DoubleSolenoid(0, 0/* will change */);
 
-
     public void init() {
         piston.set(Value.kForward);
     }
@@ -22,17 +20,19 @@ public class WaterWheel {
         Value pistonState;
         double topPower;
         double bottomPower;
-        
+
         switch (state) {
             case INTAKE:
                 pistonState = Value.kReverse;
                 topPower = 1;
                 bottomPower = 1;
                 break;
+
             case MIDDLE:
             case TOP:
                 pistonState = Value.kForward;
-                // Will change
+
+                // TODO: change motor direction
                 if (R1val) {
                     topPower = RJoystickYVal;
                     bottomPower = RJoystickYVal;
@@ -41,6 +41,7 @@ public class WaterWheel {
                     bottomPower = RJoystickYVal;
                 }
                 break;
+
             case TRAVEL:
             default:
                 pistonState = Value.kForward;
@@ -48,6 +49,7 @@ public class WaterWheel {
                 bottomPower = 0;
                 break;
         }
+
         piston.set(pistonState);
         topMotor.setOutput(MotorControlMode.PERCENT_OUTPUT, topPower);
         bottomMotor.setOutput(MotorControlMode.PERCENT_OUTPUT, bottomPower);
