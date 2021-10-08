@@ -13,8 +13,8 @@ public class Blocks {
     private final OrbitMotor intakeWheels = OrbitMotorFactory.spark(new MotorProps(0, false, false, 1));
     private final DoubleSolenoid piston = new DoubleSolenoid(0, 0);
 
-    private final double tiltMotorHigh = 0;
-    private final double tiltMotorLow = 0;
+    private final float tiltMotorHigh = 0;
+    private final float tiltMotorLow = 0;
 
     private boolean pistonForward = false;
     private boolean tiltMotorTop = false;
@@ -23,9 +23,9 @@ public class Blocks {
         piston.set(Value.kForward);
     }
 
-    public void execute(final RobotState state, final double RJoystickYVal, final boolean R1ValRisingEdge,
+    public void execute(final RobotState state, final float RJoystickYVal, final boolean R1ValRisingEdge,
             final boolean L1RisingEdge) {
-        double intakePower;
+        float intakePower;
 
         switch (state) {
             case INTAKE:

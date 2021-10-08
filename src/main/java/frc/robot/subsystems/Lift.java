@@ -9,16 +9,16 @@ public class Lift {
     private final OrbitMotor liftMotor = OrbitMotorFactory.falcon(new MotorProps(1, false, false, 1));
 
     // will change
-    private final double highPos = 0;
-    private final double midPos = 0;
-    private final double bottomPos = 0;
+    private final float highPos = 0;
+    private final float midPos = 0;
+    private final float bottomPos = 0;
 
     public void init() {
         liftMotor.setOutput(MotorControlMode.POSITION, bottomPos);
     }
 
     public void execute(final RobotState state) {
-        double wantedPos;
+        float wantedPos;
         switch (state) {
             case INTAKE:
             case TRAVEL:

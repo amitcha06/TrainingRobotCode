@@ -18,7 +18,7 @@ public class Panels {
         piston.set(Value.kReverse);
     }
 
-    public void execute(final RobotState state, final boolean R1risingEdge, final double RJoystickYVal) {
+    public void execute(final RobotState state, final boolean R1risingEdge, final float RJoystickYVal) {
         boolean vaccumActive = false;
         boolean vaccumRelease = false;
 

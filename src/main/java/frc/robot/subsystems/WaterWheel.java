@@ -16,10 +16,10 @@ public class WaterWheel {
         piston.set(Value.kForward);
     }
 
-    public void execute(final RobotState state, final double RJoystickYVal, final boolean R1val) {
+    public void execute(final RobotState state, final float RJoystickYVal, final boolean R1val) {
         Value pistonState;
-        double topPower;
-        double bottomPower;
+        float topPower;
+        float bottomPower;
 
         switch (state) {
             case INTAKE:
