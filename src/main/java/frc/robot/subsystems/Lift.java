@@ -5,7 +5,7 @@ import frc.robot.orbitmotors.MotorProps;
 import frc.robot.orbitmotors.OrbitMotor;
 import frc.robot.orbitmotors.OrbitMotorFactory;
 
-public class Lift {
+public class Lift implements SubSystem{
     private final OrbitMotor liftMotor = OrbitMotorFactory.falcon(new MotorProps(1, false, false, 1));
 
     // will change
@@ -13,10 +13,12 @@ public class Lift {
     private final float midPos = 0;
     private final float bottomPos = 0;
 
+    @Override
     public void init() {
         liftMotor.setOutput(MotorControlMode.POSITION, bottomPos);
     }
-
+    
+    @Override
     public void execute(final RobotState state) {
         float wantedPos;
         switch (state) {

@@ -2,12 +2,13 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
+import frc.robot.StaticJoystick;
 import frc.robot.orbitmotors.MotorControlMode;
 import frc.robot.orbitmotors.MotorProps;
 import frc.robot.orbitmotors.OrbitMotor;
 import frc.robot.orbitmotors.OrbitMotorFactory;
 
-public class Blocks {
+public class Blocks implements SubSystem{
     // TODO: check ports and properties
     private final OrbitMotor tiltMotor = OrbitMotorFactory.talonSRX(new MotorProps(0, false, false, 1));
     private final OrbitMotor intakeWheels = OrbitMotorFactory.spark(new MotorProps(0, false, false, 1));
@@ -18,15 +19,20 @@ public class Blocks {
 
     private boolean pistonForward = false;
     private boolean tiltMotorTop = false;
+    private boolean lastR1  =  false;
+    private boolean lastL1 = false;
 
+    @Override
     public void init() {
         piston.set(Value.kForward);
     }
 
-    public void execute(final RobotState state, final float RJoystickYVal, final boolean R1ValRisingEdge,
-            final boolean L1RisingEdge) {
+    @Override
+    public void execute(final RobotState state) {
         float intakePower;
-
+        final boolean r1Val = StaticJoystick.joystick.getRawButton(5);
+        final boolean l1Val = StaticJoystick.joystick.getRawButton(4);
+        final float rJoystickYVal = (float) StaticJoystick.joystick.getRawAxis(4);
         switch (state) {
             case INTAKE:
                 pistonForward = false;
@@ -35,19 +41,19 @@ public class Blocks {
                 break;
 
             case MIDDLE:
-                if (R1ValRisingEdge) {
+                if (r1Val && !lastR1) {
                     pistonForward = !pistonForward;
                 }
-                intakePower = RJoystickYVal;
+                intakePower = rJoystickYVal;
                 tiltMotorTop = false;
                 break;
 
             case TOP:
-                if (R1ValRisingEdge) {
+                if (r1Val && !lastR1) {
                     pistonForward = !pistonForward;
                 }
-                intakePower = RJoystickYVal;
-                if (L1RisingEdge) {
+                intakePower = rJoystickYVal;
+                if (l1Val && !lastL1) {
                     tiltMotorTop = !tiltMotorTop;
                 }
                 break;
@@ -63,5 +69,7 @@ public class Blocks {
         piston.set(pistonForward ? Value.kForward : Value.kReverse);
         intakeWheels.setOutput(MotorControlMode.PERCENT_OUTPUT, intakePower);
         tiltMotor.setOutput(MotorControlMode.POSITION, tiltMotorTop ? tiltMotorHigh : tiltMotorLow);
+        lastR1 = r1Val;
+        lastL1 = l1Val;
     }
 }
