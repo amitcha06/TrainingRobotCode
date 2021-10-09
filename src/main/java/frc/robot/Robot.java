@@ -59,6 +59,7 @@ public class Robot extends TimedRobot{
                 subSystemManager = new SubSystemManager(new Lift(),new Panels());
                 break;    
         }
+        subSystemManager.init();
     }
     @Override
     public void teleopPeriodic() {
